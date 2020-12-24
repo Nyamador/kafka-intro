@@ -2,8 +2,8 @@ from confluent_kafka import Producer
 import socket
 
 conf  = {
-    'bootstrap.servers': "host1:9092,host2:9092",
-    'client.id': socket.gethostbyname()
+    'bootstrap.servers': "localhost:9092",
+    'client.id': socket.gethostname()
 }
 
 producer = Producer(conf)
@@ -14,6 +14,7 @@ def acked(err, msg):
     else:
         print("Message produced: %s" % (str(msg)))
 
-producer.produce(topic, key="key", value="value", callback=acked)
+topic = "students"
+producer.produce(topic, key="key", value="This is a message", callback=acked)
 
 producer.poll(1)
